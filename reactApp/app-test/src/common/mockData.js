@@ -14,4 +14,12 @@ const timelines = [
 
 function makeDataGenerator(items) {
   let itemIndex = 0;
+  return function getNextData() {
+    const item = items[itemIndex % items.length];
+    itemIndex += 1;
+    return { ...item, id: itemIndex };
+  };
 }
+
+export const getNextFriend = makeDataGenerator(friends);
+export const getNextTimeline = makeDataGenerator(timelines);

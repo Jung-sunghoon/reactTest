@@ -7,7 +7,14 @@ import TimelineList from "../component/TimelineList";
 export default function TimelineMain() {
   const [, forceUpdate] = useReducer((v) => v + 1, 0);
   useEffect(() => {
-    const unsubscribe = store.subscribe(() => forceUpdate());
+    let prevTimelines = store.getState().timeline.timelines;
+    const unsubscribe = store.subscribe(() => {
+      const timelines = store.getState().timeline.timelines;
+      if (prevTimelines !== timelines) {
+        forceUpdate();
+      }
+      prevTimelines = timelines;
+    });
     return () => unsubscribe();
   }, []);
 
