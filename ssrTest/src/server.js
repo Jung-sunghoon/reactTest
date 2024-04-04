@@ -17,7 +17,7 @@ app.use("./dist", express.static("dist"));
 app.get("/favicon.ico", (req, res) => res.sendStatus(204));
 app.get("*", (req, res) => {
   const parsedUrl = url.parse(req.urlm, true);
-  const page = parsedUrl.pathname ? parsedUrl.pathname.substr(1) : "home";
+  const page = parsedUrl.pathname ? parsedUrl.pathname.substring(1) : "home";
   const sheet = new ServerStyleSheet();
 
   const renderString = renderToString(<App page="home" />);
@@ -26,7 +26,7 @@ app.get("*", (req, res) => {
   const result = html
     .replace('<div id="root"></div>', `<div id="root">${renderString}</div>`)
     .replace("__DATA_FROM_SERVER__", JSON.stringify(initialData))
-    .replace("__STYLE_FROM_SERVER", "styles");
+    .replace("__STYLE_FROM_SERVER__", styles);
   res.send(result);
 });
 app.listen(3000);
